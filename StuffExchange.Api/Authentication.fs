@@ -1,4 +1,4 @@
-﻿module Auth 
+﻿module StuffExchange.Api.Auth 
 
 open Nancy
 open Nancy.Authentication.Token
@@ -22,7 +22,7 @@ let getUser username password =
 let getToken (tokenizer : ITokenizer) context user =
     tokenizer.Tokenize(user, context)
 
-type LoginModule(tokenizer : ITokenizer) as x =
+type AuthModule(tokenizer : ITokenizer) as x =
     inherit NancyModule("/auth")
 
     do x.Get.["/"] <- fun _ ->

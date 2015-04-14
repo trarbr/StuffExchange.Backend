@@ -53,6 +53,7 @@
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <ItemGroup>
     <Compile Include="Authentication.fs" />
+    <Compile Include="User.fs" />
     <Compile Include="Bootstrapper.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config">
@@ -80,6 +81,23 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StuffExchange.BusinessRules\StuffExchange.BusinessRules.fsproj">
+      <Name>StuffExchange.BusinessRules</Name>
+      <Project>{04b11672-f20d-4113-b36f-e7d9766fcfb5}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\StuffExchange.Contract\StuffExchange.Contract.fsproj">
+      <Name>StuffExchange.Contract</Name>
+      <Project>{f4b28aa5-e9f4-45c3-a11c-17b801063c92}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\StuffExchange.Ports\StuffExchange.Ports.fsproj">
+      <Name>StuffExchange.Ports</Name>
+      <Project>{5d3ed71f-3660-4122-bb32-d8de2719af83}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.
