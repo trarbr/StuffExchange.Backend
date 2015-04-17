@@ -29,7 +29,10 @@ type AuthModule(tokenizer : ITokenizer) as x =
         // If RequiresAuthentication fails it will throw an exception, but it can safely be ignored:
         // Nancy will notice and return a 401
         x.RequiresAuthentication()
-        box x.Context.CurrentUser
+
+        // Return a new token for the user, use it to keep logins going
+        getToken tokenizer x.Context x.Context.CurrentUser
+        |> box
 
     do x.Post.["/"] <- fun _ ->
         let form = x.Request.Form :?> Nancy.DynamicDictionary
