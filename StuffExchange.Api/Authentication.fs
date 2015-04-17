@@ -1,5 +1,8 @@
 ﻿module StuffExchange.Api.Auth 
 
+open System.IO
+open Newtonsoft.Json
+
 open Nancy
 open Nancy.Authentication.Token
 open Nancy.Security
@@ -19,8 +22,15 @@ let getUser username password =
             UserIdentity(anne_marie, ["User"]) |> Some
         | _ -> None
 
+type TokenResponse = { Token:string }
+
 let getToken (tokenizer : ITokenizer) context user =
-    tokenizer.Tokenize(user, context)
+    let token = tokenizer.Tokenize(user, context)
+    { Token = token }
+
+
+[<CLIMutable>]
+type LoginRequest = { Username:string; Password:string }
 
 type AuthModule(tokenizer : ITokenizer) as x =
     inherit NancyModule("/auth")
@@ -35,10 +45,16 @@ type AuthModule(tokenizer : ITokenizer) as x =
         |> box
 
     do x.Post.["/"] <- fun _ ->
-        let form = x.Request.Form :?> Nancy.DynamicDictionary
-        let username = form.["username"].ToString()
-        let password = form.["password"].ToString()
+        use rdr = new StreamReader(x.Request.Body)
+        let s = rdr.ReadToEnd()
+        let request = JsonConvert.DeserializeObject<LoginRequest>(s)
 
-        getUser username password |> function
-            | Some(user) -> getToken tokenizer x.Context user |> box
-            | None -> HttpStatusCode.Unauthorized |> box
+        getUser request.Username request.Password |> function
+            | Some(user) -> 
+                getToken tokenizer x.Context user 
+                |> JsonConvert.SerializeObject
+                |> box
+            | None -> 
+                HttpStatusCode.Unauthorized 
+                |> box
+
