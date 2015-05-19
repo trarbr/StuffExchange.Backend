@@ -3,6 +3,7 @@
 type Error =
     | InvalidState of string
     | InvalidStateTransition of string
+    | AggregateNotFound of string
 
 type Result<'T> =
     | Success of 'T

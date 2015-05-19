@@ -5,5 +5,6 @@ open StuffExchange.Contract.Types
 type Command =
     | UserCommand of UserCommand
 and UserCommand =
-    | ActivateUser of CustomerId
-    | DeactivateUser of CustomerId
+    | ActivateUser of UserId
+    | DeactivateUser of UserId
+    | CreateGift of UserId: UserId * Name: string * Description: string

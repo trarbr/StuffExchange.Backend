@@ -11,6 +11,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StuffExchange.BusinessRules
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StuffExchange.Ports", "StuffExchange.Ports\StuffExchange.Ports.fsproj", "{5D3ED71F-3660-4122-BB32-D8DE2719AF83}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StuffExchange.EventStore", "StuffExchange.EventStore\StuffExchange.EventStore.fsproj", "{19DE85EB-5101-4D2D-93CF-512586E6DE16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,16 @@ Global
 		{5D3ED71F-3660-4122-BB32-D8DE2719AF83}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5D3ED71F-3660-4122-BB32-D8DE2719AF83}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5D3ED71F-3660-4122-BB32-D8DE2719AF83}.Release|x86.ActiveCfg = Release|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{19DE85EB-5101-4D2D-93CF-512586E6DE16}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

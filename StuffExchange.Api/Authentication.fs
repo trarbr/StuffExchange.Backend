@@ -8,12 +8,12 @@ open Nancy.Authentication.Token
 open Nancy.Security
 
 type UserIdentity(userName, claims) =
-    interface IUserIdentity with
+    interface IUserIdentity with 
         member x.Claims: System.Collections.Generic.IEnumerable<string> = claims
         member x.UserName: string = userName
 
 let getUser username password = 
-    let troels = "5D07438D-4E7E-4FC7-92A6-BCE87C60CD27"
+    let troels = "5D07438D-4E7E-4FC7-92A6-BCE87C60CD27" // es stream: 5d07438d-4e7e-4fc7-92a6-bce87c60cd27
     let anne_marie = "8E047A93-3FCE-401C-9768-74C1FB9E9938"
     match username, password with
         | "troels", "1234" -> 
@@ -49,8 +49,9 @@ type AuthModule(tokenizer : ITokenizer) as x =
         let s = rdr.ReadToEnd()
         let request = JsonConvert.DeserializeObject<LoginRequest>(s)
 
-        getUser request.Username request.Password |> function
-            | Some(user) -> 
+        getUser request.Username request.Password 
+        |> function
+            | Some user -> 
                 getToken tokenizer x.Context user 
                 |> JsonConvert.SerializeObject
                 |> box

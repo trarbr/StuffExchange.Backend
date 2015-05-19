@@ -3,6 +3,7 @@
 open StuffExchange.Contract.Types
 
 type Event = 
-    | UserActivated of CustomerId
-    | UserDeactivated of CustomerId
+    | UserActivated of UserId
+    | UserDeactivated of UserId
+    | GiftAdded of UserId: UserId * Name: string * Description: string
 
