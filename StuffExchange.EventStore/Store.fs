@@ -38,8 +38,8 @@ let serialize (event:'a)=
 
 let deserialize<'a> (event: ResolvedEvent) =
     let serializedString = System.Text.Encoding.UTF8.GetString(event.Event.Data)
-    let event = JsonConvert.DeserializeObject<'a>(serializedString, settings)
-    event
+    let domainEvent = JsonConvert.DeserializeObject<'a>(serializedString, settings)
+    domainEvent
 
 let readStream streamId =
     let store = connect()
