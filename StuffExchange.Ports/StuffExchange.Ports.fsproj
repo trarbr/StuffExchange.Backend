@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="EventStore.fs" />
     <Compile Include="User.fs" />
+    <Compile Include="Gift.fs" />
     <None Include="packages.config" />
     <None Include="app.config" />
   </ItemGroup>

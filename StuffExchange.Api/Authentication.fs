@@ -7,6 +7,8 @@ open Nancy
 open Nancy.Authentication.Token
 open Nancy.Security
 
+open StuffExchange.Api.Helpers
+
 type UserIdentity(userName, claims) =
     interface IUserIdentity with 
         member x.Claims: System.Collections.Generic.IEnumerable<string> = claims
@@ -45,9 +47,7 @@ type AuthModule(tokenizer : ITokenizer) as x =
         |> box
 
     do x.Post.["/"] <- fun _ ->
-        use rdr = new StreamReader(x.Request.Body)
-        let s = rdr.ReadToEnd()
-        let request = JsonConvert.DeserializeObject<LoginRequest>(s)
+        let request = getRequest<LoginRequest> x.Request.Body
 
         getUser request.Username request.Password 
         |> function

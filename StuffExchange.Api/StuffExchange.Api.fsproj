@@ -52,9 +52,11 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <ItemGroup>
+    <Compile Include="Helpers.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="Authentication.fs" />
     <Compile Include="User.fs" />
+    <Compile Include="Gift.fs" />
     <Compile Include="Bootstrapper.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config">
