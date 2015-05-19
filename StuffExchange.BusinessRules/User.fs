@@ -17,24 +17,26 @@ let handle command state : Result<Event> =
     | Inactive ->
         match command with
         | ActivateUser userId -> UserActivated userId |> Success
-        | DeactivateUser _ 
-        | CreateGift _ -> invalidStateFail state command
+//        | AddGift _
+        | DeactivateUser _ -> invalidStateFail state command 
     | Active ->
         match command with
         | ActivateUser userId -> invalidStateFail state command 
         | DeactivateUser userId -> UserDeactivated userId |> Success
-        | CreateGift (userId, name, description) -> 
-            GiftAdded (userId, name, description) |> Success
+//        | AddGift (giftId, userId, name, description) -> 
+//            GiftAdded (giftId, userId, name, description) |> Success
 
 let apply event state : Result<UserState> =
     match state with
     | Inactive -> 
         match event with
         | UserActivated _ -> Active |> Success
-        | UserDeactivated _ 
-        | GiftAdded _ -> stateTransitionFail state event
+//        | GiftAdded _ 
+        | UserDeactivated _ -> stateTransitionFail state event 
+        | _ -> stateTransitionFail state event
     | Active ->
         match event with
         | UserActivated _ -> stateTransitionFail state event
         | UserDeactivated _ -> Inactive |> Success
-        | GiftAdded (userId, name, description) -> Active |> Success
+//        | GiftAdded (giftId, userId, name, description) -> Active |> Success
+        | _ -> stateTransitionFail state event

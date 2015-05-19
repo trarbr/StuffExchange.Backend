@@ -1,3 +1,3 @@
 ﻿module StuffExchange.Contract.Types
 
-type UserId = System.Guid
+type Id = System.Guid

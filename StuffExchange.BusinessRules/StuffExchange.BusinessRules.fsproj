@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Railway.fs" />
     <Compile Include="Helpers.fs" />
+    <Compile Include="Gift.fs" />
     <Compile Include="User.fs" />
   </ItemGroup>
   <ItemGroup>

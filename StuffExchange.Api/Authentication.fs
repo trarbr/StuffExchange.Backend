@@ -58,4 +58,3 @@ type AuthModule(tokenizer : ITokenizer) as x =
             | None -> 
                 HttpStatusCode.Unauthorized 
                 |> box
-

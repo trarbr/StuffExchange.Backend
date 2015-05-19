@@ -49,8 +49,8 @@ let routeCommand (command: UserCommand) =
 
     match command with
     | ActivateUser userId 
-    | DeactivateUser userId 
-    | CreateGift (userId, _, _) -> 
+//    | AddGift (_, userId, _, _) -> 
+    | DeactivateUser userId ->
         getEventsForAggregate userId
         |> List.fold (foldable apply) Inactive
         |> handle command

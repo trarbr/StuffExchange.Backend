@@ -13,10 +13,12 @@ let getEventsForAggregate id =
     |> readStream 
 
 let addEventToAggregate event =
-    match event with
-    | UserActivated userId 
-    | UserDeactivated userId 
-    | GiftAdded (userId, _, _) ->
-        appendToStream (userId.ToString()) event |> Success
-
-
+    let aggregateId =
+        match event with
+        | UserActivated id 
+        | UserDeactivated id 
+        | GiftAdded (id, _, _, _)
+        | CommentAdded (_, id, _, _, _) -> id
+        | _ -> failwith "Not yet implemented"
+    
+    appendToStream (aggregateId.ToString()) event |> Success

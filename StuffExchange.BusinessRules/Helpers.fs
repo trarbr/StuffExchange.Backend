@@ -1,5 +1,6 @@
 ﻿module StuffExchange.BusinessRules.Helpers
 
+open Microsoft.FSharp.Reflection
 open Railway
 
 let stateTransitionFail state event = 
@@ -8,6 +9,7 @@ let stateTransitionFail state event =
     |> Failure
 
 let invalidStateFail state command =
-    sprintf "Invalid command %s for state %s" (command.GetType().Name) (state.GetType().Name)
+    let case, _ = FSharpValue.GetUnionFields(state, state.GetType())
+    sprintf "Invalid command %s for state %s" (command.GetType().Name) (case.ToString())
     |> InvalidState
     |> Failure
