@@ -54,4 +54,4 @@ let routeCommand (command: UserCommand) =
         getEventsForAggregate userId
         |> List.fold (foldable apply) Inactive
         |> handle command
-        >>= addEventToAggregate
+        >>= addEventToAggregate userId

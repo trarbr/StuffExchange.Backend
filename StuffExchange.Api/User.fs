@@ -17,17 +17,18 @@ type UserModule() as x =
         x.RequiresAuthentication()
         let headers = Seq.toList x.Request.Headers.Accept
         let commandText = getCommandText headers
+
         match commandText with
-            | "activate" -> 
-                System.Guid(x.Context.CurrentUser.UserName) 
-                |> ActivateUser
-                |> routeCommand
-                |> function
-                    | Success _ -> box HttpStatusCode.OK
-                    | Failure f ->
-                        textResponse HttpStatusCode.BadRequest f
-                        |> box
-            | _ -> box HttpStatusCode.NotFound
+        | "activate" -> 
+            System.Guid(x.Context.CurrentUser.UserName) 
+            |> ActivateUser
+            |> routeCommand
+            |> function
+                | Success _ -> box HttpStatusCode.OK
+                | Failure f ->
+                    textResponse HttpStatusCode.BadRequest f
+                    |> box
+        | _ -> box HttpStatusCode.NotFound
 
     do x.Post.["/"] <- fun _ ->
         // create a new user
