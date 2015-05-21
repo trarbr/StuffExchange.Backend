@@ -24,6 +24,7 @@ type UserModule() as x =
             |> ActivateUser
             |> routeCommand
             |> function
+                // TODO: If success respond with 202 Accepted and id of command / url for looking up result
                 | Success _ -> box HttpStatusCode.OK
                 | Failure f ->
                     textResponse HttpStatusCode.BadRequest f

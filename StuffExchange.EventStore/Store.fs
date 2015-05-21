@@ -10,6 +10,8 @@ open Newtonsoft.Json
 
 open StuffExchange.EventStore.AsyncExtensions
 
+let userCredentials = new UserCredentials("admin", "changeit")
+
 let connect() =
     let ipaddress = IPAddress.Parse("192.168.56.10")
     let endpoint = new IPEndPoint(ipaddress, 1113)
@@ -17,7 +19,7 @@ let connect() =
         let s = 
             ConnectionSettings.Create()
                 .UseConsoleLogger()
-                .SetDefaultUserCredentials(new UserCredentials("admin", "changeit"))
+                .SetDefaultUserCredentials(userCredentials)
                 .Build()
         s
 
@@ -42,7 +44,7 @@ let deserialize<'a> (event: ResolvedEvent) =
     domainEvent
 
 let readStream streamId =
-    let store = connect()
+    use store = connect()
     let slice = store.AsyncReadStreamEventsForward streamId false |> Async.RunSynchronously
     let events : List<'a> = 
         slice.Events
@@ -52,7 +54,8 @@ let readStream streamId =
     events 
 
 let appendToStream streamId event =
-    let store = connect()
+    // TODO: Catch exceptions thrown by AsyncAppendToStream
+    use store = connect()
     let events = [|event|]
     
     events 
@@ -62,3 +65,21 @@ let appendToStream streamId event =
     |> ignore
 
     event
+
+
+let subscribeToStream streamId eventHandler =
+    let store = connect()
+
+    let eventHandlerHelper (event: ResolvedEvent) =
+        event 
+        |> deserialize<'a>
+        |> eventHandler
+
+    let eventHandlerAction =
+        System.Action<EventStoreSubscription, ResolvedEvent>(fun sub event ->
+            eventHandlerHelper event)
+
+    store.SubscribeToStreamAsync(streamId, true, eventHandlerAction, userCredentials = userCredentials)
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
+    |> ignore

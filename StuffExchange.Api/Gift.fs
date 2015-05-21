@@ -6,6 +6,7 @@ open Newtonsoft.Json
 
 open StuffExchange.Contract.Commands
 open StuffExchange.Ports.Gift
+open StuffExchange.Ports.ReadStore
 
 open StuffExchange.BusinessRules.Railway
 
@@ -26,6 +27,21 @@ type AddCommentRequest = { Timestamp: System.DateTime; Content: string }
 type GiftModule() as x =
     inherit NancyModule("/gift")
 
+    do x.Get.["/"] <- fun _ ->
+        // can't return 'em all when using key-value store :(
+        box HttpStatusCode.NotImplemented
+
+    do x.Get.["/{id:guid}"] <- fun parameters ->
+        System.Guid((parameters?id).ToString())
+        |> getGift
+        |> function
+            | Success gift -> box gift
+            | Failure f -> 
+                textResponse HttpStatusCode.BadRequest f
+                |> box
+        // get from Riak
+        //box HttpStatusCode.NotImplemented
+
 
     do x.Post.["/"] <- fun _ ->
         x.RequiresAuthentication()
@@ -40,13 +56,11 @@ type GiftModule() as x =
                 textResponse HttpStatusCode.BadRequest f
                 |> box
 
-                // addedgift: 46a467cf-ab43-4974-b5db-c327ff8fb0d0
 
     do x.Post.["/{id:guid}"] <- fun parameters ->
         x.RequiresAuthentication()
         let userId = System.Guid(x.Context.CurrentUser.UserName)
-        let p = parameters :?> Nancy.DynamicDictionary
-        let gift = System.Guid(p.["id"].ToString())
+        let giftId = System.Guid((parameters?id).ToString())
         let headers = Seq.toList x.Request.Headers.Accept
         let commandText = getCommandText headers
 
@@ -54,11 +68,7 @@ type GiftModule() as x =
         | "addComment" ->
             let request = getRequest<AddCommentRequest> x.Request.Body
             let commentId = System.Guid.NewGuid()
-            // todo: fix timestamps serialization
-            // 2012-04-23T18:25:43.511Z
-            // http://stackoverflow.com/questions/10286204/the-right-json-date-format
-            // Seems to be the default anyway
-            AddComment (commentId, gift, userId, request.Timestamp, request.Content)
+            AddComment (commentId, giftId, userId, request.Timestamp, request.Content)
             |> routeCommand
             |> function
                 | Success _ -> box HttpStatusCode.OK
@@ -68,10 +78,9 @@ type GiftModule() as x =
         | "addImage" -> box HttpStatusCode.NotImplemented
         | _ -> box HttpStatusCode.NotFound
 
-
         // non-idempotent commands are POST'ed to the id of the gift, but you still need
         // to set command in accept header
-        //box HttpStatusCode.NotImplemented
+        // but then, why not have id in url for put?
 
     do x.Put.["/"] <- fun _ ->
         x.RequiresAuthentication()

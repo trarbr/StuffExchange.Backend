@@ -13,5 +13,10 @@ let getEventsForAggregate id =
     |> readStream 
 
 let addEventToAggregate id event =
-    
     appendToStream (id.ToString()) event |> Success
+
+let subscribeToEventType eventType eventHandler =
+    let streamId = sprintf "$et-%s" eventType
+    subscribeToStream streamId eventHandler
+
+    
