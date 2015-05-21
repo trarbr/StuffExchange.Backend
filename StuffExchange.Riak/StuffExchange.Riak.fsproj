@@ -76,9 +76,9 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StuffExchange.BusinessRules\StuffExchange.BusinessRules.fsproj">
-      <Name>StuffExchange.BusinessRules</Name>
-      <Project>{04b11672-f20d-4113-b36f-e7d9766fcfb5}</Project>
+    <ProjectReference Include="..\StuffExchange.Contract\StuffExchange.Contract.fsproj">
+      <Name>StuffExchange.Contract</Name>
+      <Project>{f4b28aa5-e9f4-45c3-a11c-17b801063c92}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

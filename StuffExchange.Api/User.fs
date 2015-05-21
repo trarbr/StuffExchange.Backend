@@ -5,10 +5,10 @@ open Nancy.Security
 open Newtonsoft.Json
 
 open StuffExchange.Contract.Commands
+open StuffExchange.Contract.Railway
 open StuffExchange.Ports.User
 open StuffExchange.Api.Helpers
 
-open StuffExchange.BusinessRules.Railway
 
 type UserModule() as x =
     inherit NancyModule("/user")

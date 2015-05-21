@@ -4,11 +4,11 @@ open Nancy
 open Nancy.Security
 open Newtonsoft.Json
 
+open StuffExchange.Contract.Railway
 open StuffExchange.Contract.Commands
 open StuffExchange.Ports.Gift
 open StuffExchange.Ports.ReadStore
 
-open StuffExchange.BusinessRules.Railway
 
 open StuffExchange.Api.Helpers
 

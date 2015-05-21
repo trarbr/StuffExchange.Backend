@@ -4,7 +4,7 @@ open RiakClient
 open RiakClient.Models
 open Newtonsoft.Json
 
-open StuffExchange.BusinessRules.Railway
+open StuffExchange.Contract.Railway
 
 // TODO: set app.config value in EXE's app.config
 let writeToRiak (bucket: string) (key: string) value = 

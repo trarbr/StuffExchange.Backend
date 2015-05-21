@@ -4,15 +4,15 @@ open StuffExchange.Contract
 open Types
 open Commands
 open Events
-
 open Railway
+
 open Helpers
 
 type UserState =
     | Inactive
     | Active
 
-let handle command state : Result<Event> =
+let handle command state =
     match state with
     | Inactive ->
         match command with

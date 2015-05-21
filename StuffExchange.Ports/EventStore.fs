@@ -2,7 +2,7 @@
 
 open StuffExchange.EventStore.AsyncExtensions
 open StuffExchange.EventStore.Store
-open StuffExchange.BusinessRules.Railway
+open StuffExchange.Contract.Railway
 open StuffExchange.Contract.Events
 
 

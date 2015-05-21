@@ -1,10 +1,10 @@
 ﻿module StuffExchange.Ports.Gift
 
 open StuffExchange.Contract.Commands
+open StuffExchange.Contract.Railway
 open StuffExchange.Ports.EventStore
 open StuffExchange.BusinessRules.Gift
 
-open StuffExchange.BusinessRules.Railway
 
 let routeCommand (command: GiftCommand) =
     let foldable apply currentState event =

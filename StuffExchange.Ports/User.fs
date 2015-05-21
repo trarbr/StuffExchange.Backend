@@ -3,8 +3,8 @@
 //open Akka.FSharp
 
 open StuffExchange.Contract.Commands
+open StuffExchange.Contract.Railway
 open StuffExchange.BusinessRules.User
-open StuffExchange.BusinessRules.Railway
 open StuffExchange.Ports.EventStore
 
 

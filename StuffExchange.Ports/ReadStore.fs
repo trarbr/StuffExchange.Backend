@@ -1,7 +1,6 @@
 ﻿module StuffExchange.Ports.ReadStore
 
 open StuffExchange.Riak.Riak
-open StuffExchange.BusinessRules.Railway
 open StuffExchange.Contract.Types
 
 

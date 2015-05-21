@@ -1,4 +1,4 @@
-﻿module StuffExchange.BusinessRules.Railway
+﻿module StuffExchange.Contract.Railway
 
 type Error =
     | InvalidState of string
@@ -13,6 +13,7 @@ type Result<'T> =
 let bind switchFunction result = 
     match result with
     | Success s -> switchFunction s
-    | Failure f -> result
+    | Failure f -> Failure f
 
 let (>>=) result switchFunction = bind switchFunction result
+

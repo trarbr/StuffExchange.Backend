@@ -3,8 +3,7 @@ open StuffExchange.Ports.ReadStore
 open StuffExchange.Contract
 open Types
 open Events
-
-open StuffExchange.BusinessRules.Railway
+open Railway
 
 let giftAddedHandler (event: Event) =
     match event with
