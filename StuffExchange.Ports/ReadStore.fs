@@ -4,6 +4,7 @@ open StuffExchange.Riak.Riak
 open StuffExchange.BusinessRules.Railway
 open StuffExchange.Contract.Types
 
+
 let getUser userId =
     userId.ToString()
     |> readFromRiak<User> "users"

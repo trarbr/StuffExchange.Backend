@@ -6,6 +6,7 @@ open Newtonsoft.Json
 
 open StuffExchange.BusinessRules.Railway
 
+// TODO: set app.config value in EXE's app.config
 let writeToRiak (bucket: string) (key: string) value = 
     let serializedValue = JsonConvert.SerializeObject(value)
     use cluster : IRiakEndPoint = RiakCluster.FromConfig("riakConfig")
