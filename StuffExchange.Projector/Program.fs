@@ -68,6 +68,10 @@ let commentAddedHandler event =
             |> addCommentToGift gift
         | _ -> ()
     | _ -> ()
+
+//let domainEventHandler event =
+//    match event with
+//    | CommentAdded (_, _, _, _, _) -> commentAddedHandler event
             
 
 [<EntryPoint>]
@@ -75,6 +79,7 @@ let main argv =
     // define functions for each eventtype
     // subscribe to event store
     // way too many connections here!
+    // make a projection inside EventStore that will linkTo on all domain events, and just subscribe to that instead
     subscribeToEventType "GiftAdded" giftAddedHandler
     subscribeToEventType "TitleChanged" titleChangedHandler
     subscribeToEventType "DescriptionUpdated" descriptionUpdatedHandler
