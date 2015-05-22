@@ -9,7 +9,6 @@ open StuffExchange.Core.Railway
 
 open Helpers
 
-// gitstate must keep track of offers made, its own id, its owner/user
 type Available = {Id: Id; User: Id; Images: int; Wishers: Id list; }
 type Offered = {Id: Id; User: Id; Images: int; Wishers: Id list; OfferedTo: Id}
 
@@ -74,11 +73,11 @@ let handle command state : Result<Event> =
             let offeredTo = giftState.OfferedTo
             match isWisher with
             | true ->
-                match wishUnmaking.User with
-                | offeredTo ->
+                match wishUnmaking.User = offeredTo with
+                | true ->
                     OfferDeclined {Gift = wishUnmaking.Gift; User = wishUnmaking.User} 
                     |> Success
-                | _ ->
+                | false ->
                     WishUnmade wishUnmaking |> Success
             | false ->
                 invalidStateFail state command

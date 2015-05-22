@@ -4,15 +4,24 @@ open Nancy
 open System.IO
 open Newtonsoft.Json
 
+open StuffExchange.Core.Railway
+
 let (?) (parameters: obj) param =
     (parameters :?> Nancy.DynamicDictionary).[param]
 
-let textResponse (statusCode: HttpStatusCode) failure =
-    let body = JsonConvert.SerializeObject(failure)
-    let r = new Nancy.Responses.TextResponse(statusCode, body)
-    r.ContentType <- "application/json"
-    //let r2 = new Nancy.Responses.JsonResponse(failure, JsonSerializer.CreateDefault())
-    r
+
+let jsonResponse (statusCode: HttpStatusCode) body =
+    let body = JsonConvert.SerializeObject(body)
+    let response = new Nancy.Responses.TextResponse(statusCode, body)
+    response.ContentType <- "application/json"
+    box response
+
+let respond result =
+    match result with
+    | Success s ->
+        jsonResponse HttpStatusCode.OK s
+    | Failure f ->
+        jsonResponse HttpStatusCode.BadRequest f
 
 let getCommandText (headers: List<(string * decimal)>) =
     // format goes like: application/vnd.stuffexchange.command+json - THIS IS NOT 5LMT

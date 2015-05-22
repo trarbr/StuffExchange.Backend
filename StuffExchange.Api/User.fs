@@ -28,7 +28,7 @@ type UserModule() as x =
                 // TODO: If success respond with 202 Accepted and id of command / url for looking up result
                 | Success _ -> box HttpStatusCode.OK
                 | Failure f ->
-                    textResponse HttpStatusCode.BadRequest f
+                    jsonResponse HttpStatusCode.BadRequest f
                     |> box
         | _ -> box HttpStatusCode.NotFound
 

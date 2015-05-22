@@ -5,6 +5,7 @@ open Nancy.Security
 open Newtonsoft.Json
 
 open StuffExchange.Core.Railway
+open StuffExchange.Core.ImageProcessing
 open StuffExchange.Contract.Commands
 open StuffExchange.Contract.Types
 open StuffExchange.Ports.Gift
@@ -32,13 +33,7 @@ type GiftModule() as x =
     do x.Get.["/{id:guid}"] <- fun parameters ->
         System.Guid((parameters?id).ToString())
         |> getGift
-        |> function
-            | Success gift -> box gift
-            | Failure f -> 
-                textResponse HttpStatusCode.BadRequest f
-                |> box
-        // get from Riak
-        //box HttpStatusCode.NotImplemented
+        |> respond
 
 
     do x.Post.["/"] <- fun _ ->
@@ -49,11 +44,7 @@ type GiftModule() as x =
         {GiftAddition.Id = System.Guid.NewGuid(); User = userId; Title = request.Title; Description = request.Description}
         |> AddGift
         |> routeCommand
-        |> function
-            | Success _ -> box HttpStatusCode.OK
-            | Failure f -> 
-                textResponse HttpStatusCode.BadRequest f
-                |> box
+        |> respond
 
 
     do x.Post.["/{id:guid}"] <- fun parameters ->
@@ -70,12 +61,20 @@ type GiftModule() as x =
             {CommentAddition.Id = commentId; Gift = giftId; User = userId; Timestamp = request.Timestamp; Content = request.Content}
             |> AddComment 
             |> routeCommand
-            |> function
-                | Success _ -> box HttpStatusCode.OK
-                | Failure f -> 
-                    textResponse HttpStatusCode.BadRequest f
-                    |> box
-        | "addImage" -> box HttpStatusCode.NotImplemented
+            |> respond
+        | "addImage" -> 
+            // TODO: check that it is a jpg
+            let image = Seq.head x.Request.Files
+            let imageId = System.Guid.NewGuid()
+            let filename = sprintf @"images\%s.jpg" (imageId.ToString())
+            let fileStream = System.IO.File.Create(filename)
+            image.Value.CopyTo fileStream
+            fileStream.Close()
+            let thumbnail = saveThumbnail filename
+            {ImageAddition.Id = imageId; Gift = giftId}
+            |> AddImage
+            |> routeCommand
+            |> respond
         | _ -> box HttpStatusCode.NotFound
 
         // non-idempotent commands are POST'ed to the id of the gift, but you still need
@@ -95,21 +94,13 @@ type GiftModule() as x =
             {TitleChange.Gift = request.Gift; NewTitle = request.Title}
             |> ChangeTitle
             |> routeCommand
-            |> function 
-                | Success _ -> box HttpStatusCode.OK
-                | Failure f -> 
-                    HttpStatusCode.BadRequest
-                    |> box
+            |> respond
         | "updateDescription" ->
             let request = getRequest<UpdateDescriptionRequest> x.Request.Body
             {DescriptionUpdate.Gift = request.Gift; NewDescription = request.Description}
             |> UpdateDescription
             |> routeCommand
-            |> function
-                | Success _ -> box HttpStatusCode.OK
-                | Failure f -> 
-                    HttpStatusCode.BadRequest
-                    |> box
+            |> respond
         | _ -> box HttpStatusCode.NotFound
 
 

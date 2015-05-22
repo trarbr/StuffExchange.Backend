@@ -30,10 +30,11 @@ type Gift = { Id: Id; User: UserIdentity; Title: string; Description: string;
 // If Offered, others can still MakeWish, but not when GivenAway
 // User B can either AcceptOffer og DeclineOffer, if DeclineOffer it goes back to available, with user B off the list of wishers
 // Gift states: Init -> Available -> Offered -> GivenAway
-// MakeWish can be undone with TakeBackWish. If TakeBackWish is received while in state of Offered, does it fail or just decline?
+// MakeWish can be undone with UnmakeWish. If UnmakeWish is received while in state of Offered, does it fail or just decline?
 // If it fails, how would you tell the user?
 // How would notifications work? Like messages? MakeWish => "Hi user A, I would like this. Regards user B". Store messages on user?
 // Or a separate "inbox" bucket keyed by userId? I'd say separate, don't need it for most things. 
+// And please don't key by userId!
 // And messages could be full text indexed...
 //[<CLIMutable>]
 //type GiveAwayGift = { Id: Id; User: Id; Username: string; Title: string; Description: string; 
