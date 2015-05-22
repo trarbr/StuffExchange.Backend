@@ -41,5 +41,10 @@ type Gift = { Id: Id; User: Id; Username: string; Title: string; Description: st
 //type GeoGift = { Id: Id; User: Id; Username: string; Title: string; Description: string; 
 //    Images: string list; Comments: Comment list; Location: Location; Location_p: string}
 
-
-
+type GiftAddition = {Id: Id; User: Id; Title: string; Description: string}
+type TitleChange = {Gift: Id; NewTitle: string}
+type DescriptionUpdate = {Gift: Id; NewDescription: string}
+type ImageAddition = {Id: Id; Gift: Id}
+type CommentAddition = {Id: Id; Gift: Id; User: Id; Timestamp: System.DateTime; Content: string}
+type UserActivation = {Id: Id}
+type UserDeactivation = {ID: Id}

@@ -16,37 +16,37 @@ let handle command state : Result<Event> =
     match state with
     | Init ->
         match command with
-        | AddGift (id, user, title, description) -> 
-            GiftAdded (id, user, title, description) |> Success
+        | AddGift giftAddition -> 
+            GiftAdded giftAddition |> Success
         | _ -> invalidStateFail state command
     | Available (giftId, user, title, description) ->
         match command with
-        | ChangeTitle (id, newTitle) -> 
-            TitleChanged (id, newTitle) |> Success
-        | UpdateDescription (id, newDescription) ->
-            DescriptionUpdated (id, newDescription) |> Success
-        | AddImage (id, gift) ->
-            ImageAdded (id, gift) |> Success
-        | AddComment (id, gift, user, timestamp, content) ->
-            CommentAdded (id, gift, user, timestamp, content) |> Success
+        | ChangeTitle titleChange -> 
+            TitleChanged titleChange |> Success
+        | UpdateDescription descriptionUpdate ->
+            DescriptionUpdated descriptionUpdate |> Success
+        | AddImage imageAddition ->
+            ImageAdded imageAddition |> Success
+        | AddComment commentAddition ->
+            CommentAdded commentAddition |> Success
         | _ -> invalidStateFail state command
 
 let apply event state : Result<GiftState> =
     match state with
     | Init ->
         match event with
-        | GiftAdded (id, user, title, description) ->
-            Available (id, user, title, description) |> Success
+        | GiftAdded gift ->
+            Available (gift.Id, gift.User, gift.Title, gift.Description) |> Success
         | _ -> stateTransitionFail state event
     | Available (id, user, title, description) ->
         match event with
-        | TitleChanged (gift, newTitle) ->
-            Available (gift, user, newTitle, description) |> Success
-        | DescriptionUpdated (gift, newDescription) ->
-            Available (gift, user, title, newDescription) |> Success
-        | ImageAdded (id, gift) ->
+        | TitleChanged newTitle ->
+            Available (id, user, newTitle.NewTitle, description) |> Success
+        | DescriptionUpdated newDescription  ->
+            Available (id, user, title, newDescription.NewDescription) |> Success
+        | ImageAdded imageAddition ->
             Available (id, user, title, description) |> Success
-        | CommentAdded (id, gift, user, timestamp, content) ->
+        | CommentAdded commentAddition ->
             Available (id, user, title, description) |> Success
         | _ -> stateTransitionFail state event
 

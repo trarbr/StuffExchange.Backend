@@ -47,11 +47,14 @@ let routeCommand (command: UserCommand) =
             | Success newState -> newState
             | Failure _ -> currentState
 
-    match command with
-    | ActivateUser userId 
-//    | AddGift (_, userId, _, _) -> 
-    | DeactivateUser userId ->
-        getEventsForAggregate userId
-        |> List.fold (foldable apply) Inactive
-        |> handle command
-        >>= addEventToAggregate userId
+    let aggregateId = 
+        match command with
+        | ActivateUser activation -> activation.Id
+//      | AddGift (_, userId, _, _) -> 
+        | DeactivateUser deactivation -> deactivation.ID
+    
+    aggregateId 
+    |> getEventsForAggregate 
+    |> List.fold (foldable apply) Inactive
+    |> handle command
+    >>= addEventToAggregate aggregateId

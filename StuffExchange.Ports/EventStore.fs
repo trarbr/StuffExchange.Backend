@@ -7,8 +7,6 @@ open StuffExchange.Contract.Events
 
 
 let getEventsForAggregate id =
-    // get in touch with eventstore, read the stream, return a list of all deserialized events
-    // connect()
     id.ToString()
     |> readStream 
 
@@ -18,5 +16,25 @@ let addEventToAggregate id event =
 let subscribeToEventType eventType eventHandler =
     let streamId = sprintf "$et-%s" eventType
     subscribeToStream streamId eventHandler
+
+let subscribeToDomainEvents eventHandler =
+    let streamId = "domainEvents" 
+    subscribeToStream streamId eventHandler
+
+(* The domainEvents projection.
+   Remember to run with --run-projections=all
+   and enable emit for the projection
+fromAll().when({
+    'GiftAdded': handle,
+    'TitleChanged': handle,
+    'DescriptionUpdated': handle,
+    'ImageAdded': handle,
+    'CommentAdded': handle
+});
+
+function handle(state, ev) {
+    linkTo("domainStream", ev);
+}
+*)
 
     

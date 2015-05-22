@@ -13,16 +13,19 @@ let routeCommand (command: GiftCommand) =
             | Success newState -> newState
             | Failure _ -> currentState
 
-    match command with
-    | AddGift (id, _, _, _) 
-    | AddImage (_, id) 
-    | ChangeTitle (id, _)
-    | UpdateDescription (id, _)
-    | AddComment (_, id, _, _, _) ->
-        getEventsForAggregate id
-        |> List.fold (foldable apply) Init
-        |> handle command
-        >>= addEventToAggregate id
+    let aggregateId = 
+        match command with
+        | AddGift gift -> gift.Id
+        | AddImage image -> image.Gift
+        | ChangeTitle title -> title.Gift
+        | UpdateDescription description -> description.Gift
+        | AddComment comment -> comment.Gift
+
+    aggregateId
+    |> getEventsForAggregate
+    |> List.fold (foldable apply) Init
+    |> handle command
+    >>= addEventToAggregate aggregateId
 
 
 

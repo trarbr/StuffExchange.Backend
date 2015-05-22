@@ -6,6 +6,7 @@ open Newtonsoft.Json
 
 open StuffExchange.Contract.Railway
 open StuffExchange.Contract.Commands
+open StuffExchange.Contract.Types
 open StuffExchange.Ports.Gift
 open StuffExchange.Ports.ReadStore
 
@@ -48,7 +49,8 @@ type GiftModule() as x =
         let request = getRequest<AddGiftRequest> x.Request.Body
         let userId = System.Guid(x.Context.CurrentUser.UserName)
 
-        AddGift (System.Guid.NewGuid(), userId, request.Title, request.Description)
+        {GiftAddition.Id = System.Guid.NewGuid(); User = userId; Title = request.Title; Description = request.Description}
+        |> AddGift
         |> routeCommand
         |> function
             | Success _ -> box HttpStatusCode.OK
@@ -68,7 +70,8 @@ type GiftModule() as x =
         | "addComment" ->
             let request = getRequest<AddCommentRequest> x.Request.Body
             let commentId = System.Guid.NewGuid()
-            AddComment (commentId, giftId, userId, request.Timestamp, request.Content)
+            {CommentAddition.Id = commentId; Gift = giftId; User = userId; Timestamp = request.Timestamp; Content = request.Content}
+            |> AddComment 
             |> routeCommand
             |> function
                 | Success _ -> box HttpStatusCode.OK
@@ -92,7 +95,8 @@ type GiftModule() as x =
         | "changeTitle" ->
             // what if this throws?!
             let request = getRequest<ChangeTitleRequest> x.Request.Body
-            ChangeTitle (request.Gift, request.Title)
+            {TitleChange.Gift = request.Gift; NewTitle = request.Title}
+            |> ChangeTitle
             |> routeCommand
             |> function 
                 | Success _ -> box HttpStatusCode.OK
@@ -101,7 +105,8 @@ type GiftModule() as x =
                     |> box
         | "updateDescription" ->
             let request = getRequest<UpdateDescriptionRequest> x.Request.Body
-            UpdateDescription (request.Gift, request.Description)
+            {DescriptionUpdate.Gift = request.Gift; NewDescription = request.Description}
+            |> UpdateDescription
             |> routeCommand
             |> function
                 | Success _ -> box HttpStatusCode.OK

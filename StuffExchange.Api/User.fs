@@ -5,6 +5,7 @@ open Nancy.Security
 open Newtonsoft.Json
 
 open StuffExchange.Contract.Commands
+open StuffExchange.Contract.Types
 open StuffExchange.Contract.Railway
 open StuffExchange.Ports.User
 open StuffExchange.Api.Helpers
@@ -20,7 +21,7 @@ type UserModule() as x =
 
         match commandText with
         | "activate" -> 
-            System.Guid(x.Context.CurrentUser.UserName) 
+            {UserActivation.Id = System.Guid(x.Context.CurrentUser.UserName)}
             |> ActivateUser
             |> routeCommand
             |> function

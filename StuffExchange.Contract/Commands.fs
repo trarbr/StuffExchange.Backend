@@ -2,20 +2,15 @@
 
 open StuffExchange.Contract.Types
 
-//type AddComment = {Id: CommentId; Gift: GiftId; User: UserId; Timestamp: System.DateTime; Content: string}
-
 type Command =
     | UserCommand of UserCommand
     | GiftCommand of GiftCommand
 and UserCommand =
-    | ActivateUser of Id
-    | DeactivateUser of Id
+    | ActivateUser of UserActivation
+    | DeactivateUser of UserDeactivation
 and GiftCommand =
-    | AddGift of Id: Id * User: Id * Title: string * Description: string
-    | AddImage of Id: Id * Gift: Id
-    | ChangeTitle of Gift: Id * NewTitle: string
-    | UpdateDescription of Gift: Id * NewDescription: string
-    //| AddComment of AddComment
-    | AddComment of 
-        Id: Id * Gift: Id * User: Id * 
-        Timestamp: System.DateTime * Content: string
+    | AddGift of GiftAddition
+    | AddImage of ImageAddition
+    | ChangeTitle of TitleChange
+    | UpdateDescription of DescriptionUpdate
+    | AddComment of CommentAddition
