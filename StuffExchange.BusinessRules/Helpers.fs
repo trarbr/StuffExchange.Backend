@@ -14,3 +14,9 @@ let invalidStateFail state command : Result<'a> =
     sprintf "Invalid command %s for state %s" (command.GetType().Name) (case.ToString())
     |> InvalidState
     |> Failure
+
+let rec removeFromList list item =
+    match list with
+    | head :: tail when head = item -> tail
+    | head :: tail -> head :: removeFromList tail item
+    | _ -> []

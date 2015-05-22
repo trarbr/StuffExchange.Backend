@@ -10,5 +10,10 @@ type Event =
     | DescriptionUpdated of DescriptionUpdate
     | ImageAdded of ImageAddition
     | CommentAdded of CommentAddition
+    | WishMade of WishMaking
+    | WishUnmade of WishUnmaking
+    | OfferMade of OfferMaking
+    | OfferAccepted of OfferAcceptance
+    | OfferDeclined of OfferDeclination
 
 

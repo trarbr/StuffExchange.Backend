@@ -12,6 +12,8 @@ let giftAddedHandler (gift: GiftAddition) =
         let gift = {Id = gift.Id; User = user.Id; Username = user.Username; Title = gift.Title; 
             Description = gift.Description; Images = []; Comments = []}
         putGift gift
+        let user = {user with Gifts = gift.Id :: user.Gifts}
+        putUser user
     | Failure f ->
         printfn "%A" f
 
@@ -35,7 +37,7 @@ let imageAddedHandler (image: ImageAddition) =
     let gift = getGift image.Gift
     match gift with
     | Success gift ->
-        {gift with Images = (image.Id.ToString()) :: gift.Images}
+        {gift with Images = image.Id :: gift.Images}
         |> putGift
     | _ -> ()
 

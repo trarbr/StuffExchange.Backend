@@ -8,6 +8,10 @@ let getUser userId =
     userId.ToString()
     |> readFromRiak<User> "users"
 
+let putUser (user: User) =
+    let userId = user.Id.ToString()
+    writeToRiak "users" userId user
+
 let getGift giftId =
     giftId.ToString()
     |> readFromRiak<Gift> "gifts"

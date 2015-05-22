@@ -3,7 +3,7 @@
 type Id = System.Guid
 
 [<CLIMutable>]
-type User = { Id: Id; Username: string }
+type User = { Id: Id; Username: string; Gifts: Id list }
 
 [<CLIMutable>]
 type Comment = {Id: Id; Username: string; Timestamp: System.DateTime; Content: string}
@@ -11,7 +11,7 @@ type Comment = {Id: Id; Username: string; Timestamp: System.DateTime; Content: s
 // Instead of separate userid and username just put in a user?!
 [<CLIMutable>]
 type Gift = { Id: Id; User: Id; Username: string; Title: string; Description: string; 
-    Images: string list; Comments: Comment list;}
+    Images: Id list; Comments: Comment list;}
 
 // How gifts are passed on:
 // First a gift is posted by user A
@@ -41,10 +41,15 @@ type Gift = { Id: Id; User: Id; Username: string; Title: string; Description: st
 //type GeoGift = { Id: Id; User: Id; Username: string; Title: string; Description: string; 
 //    Images: string list; Comments: Comment list; Location: Location; Location_p: string}
 
+type UserActivation = {Id: Id}
+type UserDeactivation = {Id: Id}
 type GiftAddition = {Id: Id; User: Id; Title: string; Description: string}
 type TitleChange = {Gift: Id; NewTitle: string}
 type DescriptionUpdate = {Gift: Id; NewDescription: string}
 type ImageAddition = {Id: Id; Gift: Id}
 type CommentAddition = {Id: Id; Gift: Id; User: Id; Timestamp: System.DateTime; Content: string}
-type UserActivation = {Id: Id}
-type UserDeactivation = {Id: Id}
+type WishMaking = {Gift: Id; User: Id}
+type WishUnmaking = {Gift: Id; User: Id}
+type OfferMaking = {Gift: Id; User: Id}
+type OfferAcceptance = {Gift: Id; User: Id}
+type OfferDeclination = {Gift: Id; User: Id}
