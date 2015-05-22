@@ -4,7 +4,7 @@ open StuffExchange.Contract
 open Types
 open Commands
 open Events
-open Railway
+open StuffExchange.Core.Railway
 
 open Helpers
 

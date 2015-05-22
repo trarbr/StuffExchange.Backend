@@ -9,7 +9,7 @@ let getUser userId =
     |> readFromRiak<User> "users"
 
 let putUser (user: User) =
-    let userId = user.Id.ToString()
+    let userId = user.UserIdentity.Id.ToString()
     writeToRiak "users" userId user
 
 let getGift giftId =

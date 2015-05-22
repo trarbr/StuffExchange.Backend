@@ -81,6 +81,11 @@
       <Project>{f4b28aa5-e9f4-45c3-a11c-17b801063c92}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\StuffExchange.Core\StuffExchange.Core.fsproj">
+      <Name>StuffExchange.Core</Name>
+      <Project>{74f0c610-796d-4cc8-a57c-b6caad49b843}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

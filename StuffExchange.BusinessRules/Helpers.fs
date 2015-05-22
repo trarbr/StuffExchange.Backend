@@ -1,7 +1,7 @@
 ﻿module StuffExchange.BusinessRules.Helpers
 
 open Microsoft.FSharp.Reflection
-open StuffExchange.Contract.Railway
+open StuffExchange.Core.Railway
 open StuffExchange.Contract.Events
 
 let stateTransitionFail state event : Result<'a> = 
@@ -15,8 +15,3 @@ let invalidStateFail state command : Result<'a> =
     |> InvalidState
     |> Failure
 
-let rec removeFromList list item =
-    match list with
-    | head :: tail when head = item -> tail
-    | head :: tail -> head :: removeFromList tail item
-    | _ -> []

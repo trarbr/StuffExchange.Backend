@@ -6,7 +6,7 @@ open Newtonsoft.Json
 
 open StuffExchange.Contract.Commands
 open StuffExchange.Contract.Types
-open StuffExchange.Contract.Railway
+open StuffExchange.Core.Railway
 open StuffExchange.Ports.User
 open StuffExchange.Api.Helpers
 

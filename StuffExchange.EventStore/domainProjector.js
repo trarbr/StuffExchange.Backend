@@ -7,7 +7,12 @@ fromAll().when({
     'TitleChanged': handle,
     'DescriptionUpdated': handle,
     'ImageAdded': handle,
-    'CommentAdded': handle
+    'CommentAdded': handle,
+    'WishMade': handle,
+    'WishUnmade': handle,
+    'OfferMade': handle,
+    'OfferAccepted': handle,
+    'OfferDeclined': handle
 });
 
 function handle(state, ev) {

@@ -4,7 +4,7 @@ open Nancy
 open Nancy.Security
 open Newtonsoft.Json
 
-open StuffExchange.Contract.Railway
+open StuffExchange.Core.Railway
 open StuffExchange.Contract.Commands
 open StuffExchange.Contract.Types
 open StuffExchange.Ports.Gift

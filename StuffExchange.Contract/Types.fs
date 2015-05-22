@@ -3,15 +3,22 @@
 type Id = System.Guid
 
 [<CLIMutable>]
-type User = { Id: Id; Username: string; Gifts: Id list }
+type UserIdentity = {Id: Id; Username: string}
+[<CLIMutable>]
+type User = {UserIdentity: UserIdentity; Gifts: Id list; Wishlist: Id list; Offers: Id list}
 
 [<CLIMutable>]
 type Comment = {Id: Id; Username: string; Timestamp: System.DateTime; Content: string}
 
-// Instead of separate userid and username just put in a user?!
+type GiftState = 
+    | Available
+    | Offered
+    | GivenAway
+
 [<CLIMutable>]
-type Gift = { Id: Id; User: Id; Username: string; Title: string; Description: string; 
-    Images: Id list; Comments: Comment list;}
+type Gift = { Id: Id; User: UserIdentity; Title: string; Description: string; 
+    Images: Id list; Comments: Comment list; Wishers: Id list; OfferedTo: Id option;
+    State: GiftState}
 
 // How gifts are passed on:
 // First a gift is posted by user A

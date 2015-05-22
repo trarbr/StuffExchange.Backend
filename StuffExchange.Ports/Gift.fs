@@ -1,7 +1,7 @@
 ﻿module StuffExchange.Ports.Gift
 
 open StuffExchange.Contract.Commands
-open StuffExchange.Contract.Railway
+open StuffExchange.Core.Railway
 open StuffExchange.Ports.EventStore
 open StuffExchange.BusinessRules.Gift
 

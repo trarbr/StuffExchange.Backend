@@ -5,13 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>04b11672-f20d-4113-b36f-e7d9766fcfb5</ProjectGuid>
+    <ProjectGuid>74f0c610-796d-4cc8-a57c-b6caad49b843</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>StuffExchange.BusinessRules</RootNamespace>
-    <AssemblyName>StuffExchange.BusinessRules</AssemblyName>
+    <RootNamespace>StuffExchange.Core</RootNamespace>
+    <AssemblyName>StuffExchange.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
-    <Name>StuffExchange.BusinessRules</Name>
+    <Name>StuffExchange.Core</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +21,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\StuffExchange.BusinessRules.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\StuffExchange.Core.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +30,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\StuffExchange.BusinessRules.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\StuffExchange.Core.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -43,20 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers.fs" />
-    <Compile Include="Gift.fs" />
-    <Compile Include="User.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StuffExchange.Contract\StuffExchange.Contract.fsproj">
-      <Name>StuffExchange.Contract</Name>
-      <Project>{f4b28aa5-e9f4-45c3-a11c-17b801063c92}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\StuffExchange.Core\StuffExchange.Core.fsproj">
-      <Name>StuffExchange.Core</Name>
-      <Project>{74f0c610-796d-4cc8-a57c-b6caad49b843}</Project>
-      <Private>True</Private>
-    </ProjectReference>
+    <Compile Include="Railway.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
