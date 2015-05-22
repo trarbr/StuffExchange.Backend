@@ -47,4 +47,4 @@ type DescriptionUpdate = {Gift: Id; NewDescription: string}
 type ImageAddition = {Id: Id; Gift: Id}
 type CommentAddition = {Id: Id; Gift: Id; User: Id; Timestamp: System.DateTime; Content: string}
 type UserActivation = {Id: Id}
-type UserDeactivation = {ID: Id}
+type UserDeactivation = {Id: Id}

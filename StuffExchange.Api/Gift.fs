@@ -15,13 +15,10 @@ open StuffExchange.Api.Helpers
 
 [<CLIMutable>]
 type AddGiftRequest = { Title: string; Description: string }
-
 [<CLIMutable>]
 type ChangeTitleRequest = { Gift: System.Guid; Title: string }
-
 [<CLIMutable>]
 type UpdateDescriptionRequest = { Gift: System.Guid; Description: string }
-
 [<CLIMutable>]
 type AddCommentRequest = { Timestamp: System.DateTime; Content: string }
 

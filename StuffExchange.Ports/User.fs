@@ -51,7 +51,7 @@ let routeCommand (command: UserCommand) =
         match command with
         | ActivateUser activation -> activation.Id
 //      | AddGift (_, userId, _, _) -> 
-        | DeactivateUser deactivation -> deactivation.ID
+        | DeactivateUser deactivation -> deactivation.Id
     
     aggregateId 
     |> getEventsForAggregate 
