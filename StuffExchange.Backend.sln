@@ -19,6 +19,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StuffExchange.Riak", "Stuff
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StuffExchange.Core", "StuffExchange.Core\StuffExchange.Core.fsproj", "{74F0C610-796D-4CC8-A57C-B6CAAD49B843}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RiakFeeder", "RiakFeeder\RiakFeeder.fsproj", "{ED652D92-58E6-473D-A520-38D4AEF3E746}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,16 @@ Global
 		{74F0C610-796D-4CC8-A57C-B6CAAD49B843}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{74F0C610-796D-4CC8-A57C-B6CAAD49B843}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{74F0C610-796D-4CC8-A57C-B6CAAD49B843}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ED652D92-58E6-473D-A520-38D4AEF3E746}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

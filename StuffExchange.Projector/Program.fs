@@ -22,7 +22,8 @@ let giftAddedHandler (gift: GiftAddition) =
             let gifts = gift.Id :: gifts
             putGifts gifts
         | Failure f ->
-            printfn "%A" f
+            putGifts [gift.Id]
+            printfn "%A\nNo gifts found, putting this %A." f gift
     | Failure f ->
         printfn "%A" f
 
