@@ -1,4 +1,4 @@
-﻿module StuffExchange.Api.Gift
+﻿module StuffExchange.Api.Gifts
 
 open Nancy
 open Nancy.Security

@@ -1,4 +1,4 @@
-﻿module StuffExchange.Api.User
+﻿module StuffExchange.Api.Users
 
 open Nancy
 open Nancy.Security
