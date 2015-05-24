@@ -62,8 +62,8 @@ type GiftModule() as x =
         | "addImage" -> 
             // TODO: check that it is a jpg
             // TODO: weird to POST to a resource? It goes on another url...
-            let image = Seq.head x.Request.Files
             let imageId = System.Guid.NewGuid()
+            let image = Seq.head x.Request.Files
             let filename = sprintf @"images/%s.jpg" (imageId.ToString())
             let fileStream = System.IO.File.Create(filename)
             image.Value.CopyTo fileStream
