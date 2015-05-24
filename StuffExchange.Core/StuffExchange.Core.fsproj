@@ -43,9 +43,16 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers.fs" />
     <Compile Include="Railway.fs" />
+    <Compile Include="Helpers.fs" />
     <Compile Include="ImageProcessing.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StuffExchange.Contract\StuffExchange.Contract.fsproj">
+      <Name>StuffExchange.Contract</Name>
+      <Project>{f4b28aa5-e9f4-45c3-a11c-17b801063c92}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

@@ -4,7 +4,13 @@ open Nancy
 open System.IO
 open Newtonsoft.Json
 
+open StuffExchange.Contract.Commands
+open StuffExchange.Core.Helpers
 open StuffExchange.Core.Railway
+open StuffExchange.Ports.EventStore
+open StuffExchange.Ports.User
+open StuffExchange.Ports.Gift
+
 
 let (?) (parameters: obj) param =
     (parameters :?> Nancy.DynamicDictionary).[param]
@@ -35,3 +41,10 @@ let getRequest<'a> (body:IO.RequestStream) =
         use rdr = new StreamReader(body)
         let s = rdr.ReadToEnd()
         JsonConvert.DeserializeObject<'a>(s)
+
+let infrastructure = {EventReader = getEventsForAggregate; EventWriter = addEventToAggregate }
+
+let route command =
+    match command with
+    | UserCommand c -> StuffExchange.Ports.User.routeCommand infrastructure c
+    | GiftCommand c -> StuffExchange.Ports.Gift.routeCommand infrastructure c

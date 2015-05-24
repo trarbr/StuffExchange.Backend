@@ -2,11 +2,12 @@
 
 open StuffExchange.Contract.Commands
 open StuffExchange.Core.Railway
+open StuffExchange.Core.Helpers
 open StuffExchange.Ports.EventStore
 open StuffExchange.BusinessRules.Gift
 
 
-let routeCommand (command: GiftCommand) =
+let routeCommand (infrastructure: Infrastructure) (command: GiftCommand) =
     let foldable apply currentState event =
         apply event currentState 
         |> function

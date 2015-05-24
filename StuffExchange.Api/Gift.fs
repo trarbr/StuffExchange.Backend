@@ -10,8 +10,6 @@ open StuffExchange.Contract.Commands
 open StuffExchange.Contract.Types
 open StuffExchange.Ports.Gift
 open StuffExchange.Ports.ReadStore
-
-
 open StuffExchange.Api.Helpers
 
 [<CLIMutable>]
@@ -43,7 +41,7 @@ type GiftModule() as x =
 
         {GiftAddition.Id = System.Guid.NewGuid(); User = userId; Title = request.Title; Description = request.Description}
         |> AddGift
-        |> routeCommand
+        |> route
         |> respond
 
 
