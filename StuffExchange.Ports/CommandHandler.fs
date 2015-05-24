@@ -19,7 +19,7 @@ let handleUserCommand (infrastructure: Infrastructure) (command: UserCommand) =
 
     aggregateId
     |> infrastructure.EventReader
-    |> List.fold (foldable User.apply) User.UserState.Inactive
+    |> List.fold (foldable User.apply) User.Inactive
     |> User.handle command
     >>= infrastructure.EventWriter aggregateId
 
