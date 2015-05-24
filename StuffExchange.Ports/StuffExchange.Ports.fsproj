@@ -70,10 +70,6 @@
       <Project>{0024b67a-1bf9-4503-ad7d-95705769cbae}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <Reference Include="Akka">
-      <HintPath>..\packages\Akka.1.0.0\lib\net45\Akka.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="FSharp.PowerPack">
       <HintPath>..\packages\FSPowerPack.Core.Community.3.0.0.0\Lib\Net40\FSharp.PowerPack.dll</HintPath>
       <Private>True</Private>
