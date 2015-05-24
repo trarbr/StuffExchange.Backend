@@ -12,10 +12,17 @@ let giftAddedHandler (gift: GiftAddition) =
     | Success user -> 
         let gift = {Id = gift.Id; User = user.UserIdentity; Title = gift.Title; 
             Description = gift.Description; Images = []; Comments = []; Wishers = [];
-            OfferedTo = None; State = Available}
+            OfferedTo = None; State = GiftState.Available}
         putGift gift
         let user = {user with Gifts = gift.Id :: user.Gifts}
         putUser user
+        let gifts = getGifts()
+        match gifts with
+        | Success gifts ->
+            let gifts = gift.Id :: gifts
+            putGifts gifts
+        | Failure f ->
+            printfn "%A" f
     | Failure f ->
         printfn "%A" f
 
@@ -92,7 +99,7 @@ let offerMadeHandler (offer: OfferMaking) =
     let gift = getGift offer.Gift
     match gift with
     | Success gift ->
-        {gift with OfferedTo = Some offer.User; State = Offered}
+        {gift with OfferedTo = Some offer.User; State = GiftState.Offered}
         |> putGift
     | _ -> ()
     let user = getUser offer.User
@@ -106,7 +113,7 @@ let offerAcceptedHandler (offer: OfferAcceptance) =
     let gift = getGift offer.Gift
     match gift with
     | Success gift ->
-        {gift with State = GivenAway}
+        {gift with State = GiftState.GivenAway}
         |> putGift
     | _ -> ()
     let user = getUser offer.User
@@ -121,7 +128,7 @@ let offerDeclinedHandler (offer: OfferDeclination) =
     let gift = getGift offer.Gift
     match gift with
     | Success gift ->
-        {gift with State = Available; OfferedTo = None}
+        {gift with State = GiftState.Available; OfferedTo = None}
         |> putGift
     | _ -> ()
     let user = getUser offer.User

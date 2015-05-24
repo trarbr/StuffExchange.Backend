@@ -12,7 +12,7 @@ open StuffExchange.Api.Helpers
 
 
 type UserModule() as x =
-    inherit NancyModule("/user")
+    inherit NancyModule("/users")
 
     do x.Put.["/"] <- fun _ ->
         x.RequiresAuthentication()

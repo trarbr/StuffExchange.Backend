@@ -19,3 +19,9 @@ let getGift giftId =
 let putGift (gift: Gift) =
     let giftId = gift.Id.ToString()
     writeToRiak "gifts" giftId gift
+
+let getGifts() =
+    readFromRiak<List<Id>> "gifts" "all"
+
+let putGifts gifts =
+    writeToRiak "gifts" "all" gifts

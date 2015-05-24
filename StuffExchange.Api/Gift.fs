@@ -24,11 +24,11 @@ type UpdateDescriptionRequest = { Gift: System.Guid; Description: string }
 type AddCommentRequest = { Timestamp: System.DateTime; Content: string }
 
 type GiftModule() as x =
-    inherit NancyModule("/gift")
+    inherit NancyModule("/gifts")
 
     do x.Get.["/"] <- fun _ ->
-        // can't return 'em all when using key-value store :(
-        box HttpStatusCode.NotImplemented
+        getGifts()
+        |> respond
 
     do x.Get.["/{id:guid}"] <- fun parameters ->
         System.Guid((parameters?id).ToString())

@@ -20,7 +20,11 @@ let routeCommand (command: GiftCommand) =
         | ChangeTitle title -> title.Gift
         | UpdateDescription description -> description.Gift
         | AddComment comment -> comment.Gift
-        // TODO: Implement the give away gift scenario
+        | MakeWish wish -> wish.Gift
+        | UnmakeWish wish -> wish.Gift
+        | MakeOffer offer -> offer.Gift
+        | AcceptOffer offer -> offer.Gift
+        | DeclineOffer offer -> offer.Gift
 
     aggregateId
     |> getEventsForAggregate

@@ -11,9 +11,9 @@ type User = {UserIdentity: UserIdentity; Gifts: Id list; Wishlist: Id list; Offe
 type Comment = {Id: Id; Username: string; Timestamp: System.DateTime; Content: string}
 
 type GiftState = 
-    | Available
-    | Offered
-    | GivenAway
+    | Available = 0
+    | Offered = 1
+    | GivenAway = 2
 
 [<CLIMutable>]
 type Gift = { Id: Id; User: UserIdentity; Title: string; Description: string; 

@@ -18,12 +18,8 @@ let writeToRiak (bucket: string) (key: string) value =
     | false -> printfn "Something went wrong"
 
 let readFromRiak<'a> (bucket: string) (key: string) =
-    printfn "trying to read"
-    printfn "trying to read"
     use cluster : IRiakEndPoint = RiakCluster.FromConfig("riakConfig")
-    printfn "using cluster"
     let client : IRiakClient = cluster.CreateClient()
-    printfn "made client"
     let result = client.Get(bucket, key)
     match result.IsSuccess with
     | true -> 
@@ -34,3 +30,30 @@ let readFromRiak<'a> (bucket: string) (key: string) =
     | false -> 
         RiakGetFailed "Something went wrong" 
         |> Failure
+
+let deleteObject (client: IRiakClient) (bucket: string) (key: string) =
+    client.Delete(bucket, key)
+    |> ignore
+
+
+let deleteBucket (client: IRiakClient) bucket =
+    let delete = deleteObject client bucket
+    let keyStream = client.StreamListKeys(bucket)
+    if keyStream.IsSuccess
+    then
+        Seq.iter delete keyStream.Value
+        ()
+    else ()
+    
+
+let emptyAllBuckets() =
+    use cluster : IRiakEndPoint = RiakCluster.FromConfig("riakConfig")
+    let client : IRiakClient = cluster.CreateClient()
+    let delete = deleteBucket client
+    let bucketStream = client.StreamListBuckets()
+    if bucketStream.IsSuccess
+    then 
+        Seq.iter delete bucketStream.Value
+        ()
+    else ()
+    
