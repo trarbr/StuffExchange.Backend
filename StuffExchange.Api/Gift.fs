@@ -8,7 +8,6 @@ open StuffExchange.Core.Railway
 open StuffExchange.Core.ImageProcessing
 open StuffExchange.Contract.Commands
 open StuffExchange.Contract.Types
-open StuffExchange.Ports.Gift
 open StuffExchange.Ports.ReadStore
 open StuffExchange.Api.Helpers
 
@@ -40,7 +39,7 @@ type GiftModule() as x =
         let userId = System.Guid(x.Context.CurrentUser.UserName)
 
         {GiftAddition.Id = System.Guid.NewGuid(); User = userId; Title = request.Title; Description = request.Description}
-        |> AddGift
+        |> AddGiftDto
         |> route
         |> respond
 
@@ -57,8 +56,8 @@ type GiftModule() as x =
             let request = getRequest<AddCommentRequest> x.Request.Body
             let commentId = System.Guid.NewGuid()
             {CommentAddition.Id = commentId; Gift = giftId; User = userId; Timestamp = request.Timestamp; Content = request.Content}
-            |> AddComment 
-            |> routeCommand
+            |> AddCommentDto 
+            |> route
             |> respond
         | "addImage" -> 
             // TODO: check that it is a jpg
@@ -70,8 +69,8 @@ type GiftModule() as x =
             fileStream.Close()
             let thumbnail = saveThumbnail filename
             {ImageAddition.Id = imageId; Gift = giftId}
-            |> AddImage
-            |> routeCommand
+            |> AddImageDto
+            |> route
             |> respond
         | _ -> box HttpStatusCode.NotFound
 
@@ -90,14 +89,14 @@ type GiftModule() as x =
             // what if this throws?!
             let request = getRequest<ChangeTitleRequest> x.Request.Body
             {TitleChange.Gift = request.Gift; NewTitle = request.Title}
-            |> ChangeTitle
-            |> routeCommand
+            |> ChangeTitleDto
+            |> route
             |> respond
         | "updateDescription" ->
             let request = getRequest<UpdateDescriptionRequest> x.Request.Body
             {DescriptionUpdate.Gift = request.Gift; NewDescription = request.Description}
-            |> UpdateDescription
-            |> routeCommand
+            |> UpdateDescriptionDto
+            |> route
             |> respond
         | _ -> box HttpStatusCode.NotFound
 

@@ -51,8 +51,7 @@
   <ItemGroup>
     <Compile Include="ReadStore.fs" />
     <Compile Include="EventStore.fs" />
-    <Compile Include="User.fs" />
-    <Compile Include="Gift.fs" />
+    <Compile Include="CommandHandler.fs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -5,11 +5,11 @@ open System.IO
 open Newtonsoft.Json
 
 open StuffExchange.Contract.Commands
+open StuffExchange.Contract.Types
 open StuffExchange.Core.Helpers
 open StuffExchange.Core.Railway
 open StuffExchange.Ports.EventStore
-open StuffExchange.Ports.User
-open StuffExchange.Ports.Gift
+open StuffExchange.Ports.CommandHandler
 
 
 let (?) (parameters: obj) param =
@@ -44,7 +44,35 @@ let getRequest<'a> (body:IO.RequestStream) =
 
 let infrastructure = {EventReader = getEventsForAggregate; EventWriter = addEventToAggregate }
 
-let route command =
-    match command with
-    | UserCommand c -> StuffExchange.Ports.User.routeCommand infrastructure c
-    | GiftCommand c -> StuffExchange.Ports.Gift.routeCommand infrastructure c
+type CommandDto =
+    | ActivateUserDto of UserActivation
+    | DeactivateUserDto of UserDeactivation
+    | AddGiftDto of GiftAddition
+    | AddImageDto of ImageAddition
+    | ChangeTitleDto of TitleChange
+    | UpdateDescriptionDto of DescriptionUpdate
+    | AddCommentDto of CommentAddition
+    | MakeWishDto of WishMaking
+    | UnmakeWishDto of WishUnmaking
+    | MakeOfferDto of OfferMaking
+    | AcceptOfferDto of OfferAcceptance
+    | DeclineOfferDto of OfferDeclination
+    
+
+let route commandDto =
+    let userHandler = handleUserCommand infrastructure
+    let giftHandler = handleGiftCommand infrastructure
+
+    match commandDto with
+    | ActivateUserDto d -> ActivateUser d |> userHandler
+    | DeactivateUserDto d -> DeactivateUser d |> userHandler
+    | AddGiftDto d -> AddGift d |> giftHandler
+    | AddImageDto d -> AddImage d |> giftHandler
+    | ChangeTitleDto d -> ChangeTitle d |> giftHandler
+    | UpdateDescriptionDto d -> UpdateDescription d |> giftHandler
+    | AddCommentDto d -> AddComment d |> giftHandler
+    | MakeWishDto d -> MakeWish d |> giftHandler
+    | UnmakeWishDto d -> UnmakeWish d |> giftHandler
+    | MakeOfferDto d -> MakeOffer d |> giftHandler
+    | AcceptOfferDto d -> AcceptOffer d |> giftHandler
+    | DeclineOfferDto d -> DeclineOffer d |> giftHandler
