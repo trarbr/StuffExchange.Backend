@@ -6,8 +6,8 @@ open Newtonsoft.Json
 
 open StuffExchange.Contract.Commands
 open StuffExchange.Contract.Types
-open StuffExchange.Core.Helpers
 open StuffExchange.Core.Railway
+open StuffExchange.Ports.Helpers
 open StuffExchange.Ports.EventStore
 open StuffExchange.Ports.CommandHandler
 

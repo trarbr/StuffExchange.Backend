@@ -53,6 +53,7 @@
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <ItemGroup>
     <Compile Include="Helpers.fs" />
+    <Compile Include="ImageProcessing.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="Authentication.fs" />
     <Compile Include="Users.fs" />
@@ -87,6 +88,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>

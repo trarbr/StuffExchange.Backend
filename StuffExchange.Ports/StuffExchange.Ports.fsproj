@@ -49,6 +49,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Compile Include="Helpers.fs" />
     <Compile Include="ReadStore.fs" />
     <Compile Include="EventStore.fs" />
     <Compile Include="CommandHandler.fs" />

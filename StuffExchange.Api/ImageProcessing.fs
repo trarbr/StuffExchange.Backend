@@ -1,4 +1,4 @@
-﻿module StuffExchange.Core.ImageProcessing
+﻿module StuffExchange.Api.ImageProcessing
 
 open System.Drawing
 
@@ -29,3 +29,4 @@ let saveThumbnail (filename: string) =
     let thumbnailPath = filename.Split('.').[0] + "_thumb.jpg"
     thumbnail.Save(thumbnailPath)
     thumbnailPath
+

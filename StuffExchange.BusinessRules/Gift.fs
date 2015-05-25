@@ -114,12 +114,7 @@ let apply event state : Result<GiftState> =
             Available {giftState with Wishers = wishMaking.User :: giftState.Wishers}
             |> Success
         | WishUnmade wishUnmaking ->
-            let rec removeWisher wishers wisher =
-                match wishers with
-                | head :: tail when head = wisher -> tail
-                | head :: tail -> head :: removeWisher tail wisher
-                | _ -> []
-            let wishers = removeWisher giftState.Wishers wishUnmaking.User
+            let wishers = removeFromList giftState.Wishers wishUnmaking.User
             Available {giftState with Wishers = wishers}
             |> Success
         | OfferMade offerMaking ->

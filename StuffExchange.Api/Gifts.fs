@@ -5,7 +5,7 @@ open Nancy.Security
 open Newtonsoft.Json
 
 open StuffExchange.Core.Railway
-open StuffExchange.Core.ImageProcessing
+open StuffExchange.Api.ImageProcessing
 open StuffExchange.Contract.Commands
 open StuffExchange.Contract.Types
 open StuffExchange.Ports.ReadStore

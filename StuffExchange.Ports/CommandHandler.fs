@@ -4,6 +4,7 @@ open StuffExchange.Core.Helpers
 open StuffExchange.Core.Railway
 open StuffExchange.Contract.Commands
 open StuffExchange.BusinessRules
+open StuffExchange.Ports.Helpers
 
 let foldable apply currentState event =
     apply event currentState 

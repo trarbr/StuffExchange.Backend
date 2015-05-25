@@ -6,7 +6,6 @@ type Id = System.Guid
 type UserIdentity = {Id: Id; Username: string}
 [<CLIMutable>]
 type User = {UserIdentity: UserIdentity; Gifts: Id list; Wishlist: Id list; Offers: Id list}
-
 [<CLIMutable>]
 type Comment = {Id: Id; Username: string; Timestamp: System.DateTime; Content: string}
 
@@ -14,7 +13,6 @@ type GiftState =
     | Available = 0
     | Offered = 1
     | GivenAway = 2
-
 [<CLIMutable>]
 type Gift = { Id: Id; User: UserIdentity; Title: string; Description: string; 
     Images: Id list; Comments: Comment list; Wishers: Id list; OfferedTo: Id option;
