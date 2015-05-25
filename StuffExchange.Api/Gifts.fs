@@ -14,9 +14,9 @@ open StuffExchange.Api.Helpers
 [<CLIMutable>]
 type AddGiftRequest = { Title: string; Description: string }
 [<CLIMutable>]
-type ChangeTitleRequest = { Gift: System.Guid; Title: string }
+type ChangeTitleRequest = { Title: string }
 [<CLIMutable>]
-type UpdateDescriptionRequest = { Gift: System.Guid; Description: string }
+type UpdateDescriptionRequest = { Description: string }
 [<CLIMutable>]
 type AddCommentRequest = { Timestamp: System.DateTime; Content: string }
 
@@ -32,36 +32,37 @@ type GiftModule() as x =
         |> getGift
         |> respond
 
-
     do x.Post.["/"] <- fun _ ->
         x.RequiresAuthentication()
         let request = getRequest<AddGiftRequest> x.Request.Body
         let userId = System.Guid(x.Context.CurrentUser.UserName)
+        let commandName = getCommandName x.Request.Headers
 
-        {GiftAddition.Id = System.Guid.NewGuid(); User = userId; Title = request.Title; Description = request.Description}
-        |> AddGiftDto
-        |> route
-        |> respond
+        match commandName with
+        | "AddGift" ->
+            {GiftAddition.Id = System.Guid.NewGuid(); User = userId; Title = request.Title; Description = request.Description}
+            |> AddGiftDto
+            |> route
+            |> respond
+        | _ -> box HttpStatusCode.NotFound
 
 
     do x.Post.["/{id:guid}"] <- fun parameters ->
         x.RequiresAuthentication()
         let userId = System.Guid(x.Context.CurrentUser.UserName)
         let giftId = System.Guid((parameters?id).ToString())
-        let headers = Seq.toList x.Request.Headers.Accept
-        let commandText = getCommandText headers
+        let commandName = getCommandName x.Request.Headers
 
-        match commandText with
-        | "addComment" ->
+        match commandName with
+        | "AddComment" ->
             let request = getRequest<AddCommentRequest> x.Request.Body
             let commentId = System.Guid.NewGuid()
             {CommentAddition.Id = commentId; Gift = giftId; User = userId; Timestamp = request.Timestamp; Content = request.Content}
             |> AddCommentDto 
             |> route
             |> respond
-        | "addImage" -> 
+        | "AddImage" -> 
             // TODO: check that it is a jpg
-            // TODO: weird to POST to a resource? It goes on another url...
             let imageId = System.Guid.NewGuid()
             let image = Seq.head x.Request.Files
             let filename = sprintf @"images/%s.jpg" (imageId.ToString())
@@ -75,27 +76,25 @@ type GiftModule() as x =
             |> respond
         | _ -> box HttpStatusCode.NotFound
 
-        // non-idempotent commands are POST'ed to the id of the gift, but you still need
-        // to set command in accept header
-        // but then, why not have id in url for put?
 
-    do x.Put.["/"] <- fun _ ->
+    do x.Put.["/{id:guid}"] <- fun parameters ->
         x.RequiresAuthentication()
         let userId = System.Guid(x.Context.CurrentUser.UserName)
-        let headers = Seq.toList x.Request.Headers.Accept
-        let commandText = getCommandText headers
+        let giftId = System.Guid((parameters?id).ToString())
+        let commandName = getCommandName x.Request.Headers
 
-        match commandText with
-        | "changeTitle" ->
-            // what if this throws?!
+        match commandName with
+        | "ChangeTitle" ->
+            // TODO: request validation - or live with 500 
+            // what if this throws?! 500 internal server error.
             let request = getRequest<ChangeTitleRequest> x.Request.Body
-            {TitleChange.Gift = request.Gift; NewTitle = request.Title}
+            {TitleChange.Gift = giftId; NewTitle = request.Title}
             |> ChangeTitleDto
             |> route
             |> respond
-        | "updateDescription" ->
+        | "UpdateDescription" ->
             let request = getRequest<UpdateDescriptionRequest> x.Request.Body
-            {DescriptionUpdate.Gift = request.Gift; NewDescription = request.Description}
+            {DescriptionUpdate.Gift = giftId; NewDescription = request.Description}
             |> UpdateDescriptionDto
             |> route
             |> respond

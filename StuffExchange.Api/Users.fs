@@ -12,14 +12,14 @@ open StuffExchange.Api.Helpers
 type UserModule() as x =
     inherit NancyModule("/users")
 
-    do x.Put.["/"] <- fun _ ->
+    do x.Put.["/{id:guid}"] <- fun _ ->
         x.RequiresAuthentication()
-        let headers = Seq.toList x.Request.Headers.Accept
-        let commandText = getCommandText headers
+        let commandName = getCommandName x.Request.Headers
+        let userId = System.Guid(x.Context.CurrentUser.UserName)
 
-        match commandText with
-        | "activate" -> 
-            {UserActivation.Id = System.Guid(x.Context.CurrentUser.UserName)}
+        match commandName with
+        | "ActivateUser" -> 
+            {UserActivation.Id = userId}
             |> ActivateUserDto
             |> route
             |> respond
