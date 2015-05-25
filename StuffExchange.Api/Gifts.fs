@@ -47,8 +47,6 @@ type GiftModule() as x =
         | _ -> box HttpStatusCode.UnsupportedMediaType
 
 
-
-
     do x.Post.["/{id:guid}"] <- fun parameters ->
         x.RequiresAuthentication()
         let userId = System.Guid(x.Context.CurrentUser.UserName)
