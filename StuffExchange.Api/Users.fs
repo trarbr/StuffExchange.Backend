@@ -23,7 +23,8 @@ type UserModule() as x =
             |> ActivateUserDto
             |> route
             |> respond
-        | _ -> box HttpStatusCode.NotFound
+        | "DeactivateUser" -> box HttpStatusCode.NotImplemented
+        | _ -> box HttpStatusCode.UnsupportedMediaType
 
     do x.Post.["/"] <- fun _ ->
         // create a new user

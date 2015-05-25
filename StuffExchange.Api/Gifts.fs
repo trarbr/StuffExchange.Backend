@@ -44,7 +44,9 @@ type GiftModule() as x =
             |> AddGiftDto
             |> route
             |> respond
-        | _ -> box HttpStatusCode.NotFound
+        | _ -> box HttpStatusCode.UnsupportedMediaType
+
+
 
 
     do x.Post.["/{id:guid}"] <- fun parameters ->
@@ -74,7 +76,7 @@ type GiftModule() as x =
             |> AddImageDto
             |> route
             |> respond
-        | _ -> box HttpStatusCode.NotFound
+        | _ -> box HttpStatusCode.UnsupportedMediaType
 
 
     do x.Put.["/{id:guid}"] <- fun parameters ->
@@ -98,6 +100,6 @@ type GiftModule() as x =
             |> UpdateDescriptionDto
             |> route
             |> respond
-        | _ -> box HttpStatusCode.NotFound
+        | _ -> box HttpStatusCode.UnsupportedMediaType
 
 
