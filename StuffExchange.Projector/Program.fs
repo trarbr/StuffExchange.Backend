@@ -61,16 +61,17 @@ let commentAddedHandler (comment: CommentAddition) =
     let user = getUser comment.User
     match (gift, user) with
     | (Success gift, Success user) ->
-        { Comment.Id = comment.Id; Username = user.UserIdentity.Username; 
+        { Comment.Id = comment.Id; User = user.UserIdentity; 
         Timestamp = comment.Timestamp; Content = comment.Content }
         |> addCommentToGift gift
     | _ -> ()
 
 let wishMadeHandler (wish: WishMaking) =
     let gift = getGift wish.Gift
-    match gift with
-    | Success gift ->
-        {gift with Wishers = wish.User :: gift.Wishers}
+    let user = getUser wish.User
+    match (gift, user) with
+    | (Success gift, Success user) ->
+        {gift with Wishers = user.UserIdentity :: gift.Wishers}
         |> putGift
     | _ -> ()
     let user = getUser wish.User
@@ -82,9 +83,10 @@ let wishMadeHandler (wish: WishMaking) =
 
 let wishUnmadeHandler (wish: WishUnmaking) =
     let gift = getGift wish.Gift
-    match gift with
-    | Success gift ->
-        let wishers = removeFromList gift.Wishers wish.User
+    let user = getUser wish.User
+    match (gift, user) with
+    | (Success gift, Success user) ->
+        let wishers = removeFromList gift.Wishers user.UserIdentity
         {gift with Wishers = wishers}
         |> putGift
     | _ -> ()
@@ -98,9 +100,10 @@ let wishUnmadeHandler (wish: WishUnmaking) =
 
 let offerMadeHandler (offer: OfferMaking) =
     let gift = getGift offer.Gift
-    match gift with
-    | Success gift ->
-        {gift with OfferedTo = Some offer.User; State = GiftState.Offered}
+    let user = getUser offer.User
+    match (gift, user) with
+    | (Success gift, Success user) ->
+        {gift with OfferedTo = Some user.UserIdentity; State = GiftState.Offered}
         |> putGift
     | _ -> ()
     let user = getUser offer.User

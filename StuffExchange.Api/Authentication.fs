@@ -15,8 +15,8 @@ type UserIdentity(userName, claims) =
         member x.UserName: string = userName
 
 let getUser username password = 
-    let troels = "5D07438D-4E7E-4FC7-92A6-BCE87C60CD27" // es stream: 5d07438d-4e7e-4fc7-92a6-bce87c60cd27
-    let anne_marie = "8E047A93-3FCE-401C-9768-74C1FB9E9938"
+    let troels = "5d07438d-4e7e-4fc7-92a6-bce87c60cd27" 
+    let anne_marie = "8e047a93-3fce-401c-9768-74c1fb9e9938"
     match username, password with
         | "troels", "1234" -> 
             UserIdentity(troels, ["User"]) |> Some
@@ -24,11 +24,11 @@ let getUser username password =
             UserIdentity(anne_marie, ["User"]) |> Some
         | _ -> None
 
-type TokenResponse = { Token:string }
+type TokenResponse = { Token: string; UserId: string }
 
 let getToken (tokenizer : ITokenizer) context user =
     let token = tokenizer.Tokenize(user, context)
-    { Token = token }
+    { Token = token; UserId = user.UserName }
 
 
 [<CLIMutable>]

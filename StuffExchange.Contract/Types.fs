@@ -7,7 +7,7 @@ type UserIdentity = {Id: Id; Username: string}
 [<CLIMutable>]
 type User = {UserIdentity: UserIdentity; Gifts: Id list; Wishlist: Id list; Offers: Id list}
 [<CLIMutable>]
-type Comment = {Id: Id; Username: string; Timestamp: System.DateTime; Content: string}
+type Comment = {Id: Id; User: UserIdentity; Timestamp: System.DateTime; Content: string}
 
 type GiftState = 
     | Available = 0
@@ -15,7 +15,7 @@ type GiftState =
     | GivenAway = 2
 [<CLIMutable>]
 type Gift = { Id: Id; User: UserIdentity; Title: string; Description: string; 
-    Images: Id list; Comments: Comment list; Wishers: Id list; OfferedTo: Id option;
+    Images: Id list; Comments: Comment list; Wishers: UserIdentity list; OfferedTo: UserIdentity option;
     State: GiftState}
 
 // For location-aware gifts - possible to turn Lat/Lon into address?

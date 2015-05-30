@@ -28,7 +28,7 @@ let readFromRiak<'a> (bucket: string) (key: string) =
         JsonConvert.DeserializeObject<'a>(valueAsString)
         |> Success
     | false -> 
-        RiakGetFailed "Something went wrong" 
+        RiakGetFailed result.ErrorMessage
         |> Failure
 
 let deleteObject (client: IRiakClient) (bucket: string) (key: string) =
