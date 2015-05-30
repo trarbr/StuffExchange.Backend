@@ -47,7 +47,7 @@ let handle command state : Result<Event> =
             else invalidStateFail state command
         | MakeOffer offerMaking ->
             // test that the offer is made to someone on list of wishers
-            // might also want to check id of who submits the command!
+            // TODO: might also want to check id of who submits the command! Should be gift owner
             if List.exists (fun userId -> userId = offerMaking.User) giftState.Wishers
             then OfferMade offerMaking |> Success
             else invalidStateFail state command

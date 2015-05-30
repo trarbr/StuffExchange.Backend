@@ -19,6 +19,7 @@ type ChangeTitleRequest = { Title: string }
 type UpdateDescriptionRequest = { Description: string }
 [<CLIMutable>]
 type AddCommentRequest = { Timestamp: System.DateTime; Content: string }
+type MakeOfferRequest = {User: Id}
 
 type GiftModule() as x =
     inherit NancyModule("/gifts")
@@ -98,6 +99,33 @@ type GiftModule() as x =
             |> UpdateDescriptionDto
             |> route
             |> respond
+        | "MakeOffer" -> 
+            let request = getRequest<MakeOfferRequest> x.Request.Body
+            {OfferMaking.Gift = giftId; User = request.User}
+            |> MakeOfferDto
+            |> route
+            |> respond
+        | "MakeWish" ->
+            {WishMaking.Gift = giftId; User = userId}
+            |> MakeWishDto
+            |> route
+            |> respond
+        | "UnmakeWish" ->
+            {WishUnmaking.Gift = giftId; User = userId}
+            |> UnmakeWishDto
+            |> route
+            |> respond
+        | "AcceptOffer" ->
+            {OfferAcceptance.Gift = giftId; User = userId}
+            |> AcceptOfferDto
+            |> route
+            |> respond
+        | "DeclineOffer" ->
+            {OfferDeclination.Gift = giftId; User = userId}
+            |> DeclineOfferDto
+            |> route
+            |> respond
         | _ -> box HttpStatusCode.UnsupportedMediaType
+
 
 
