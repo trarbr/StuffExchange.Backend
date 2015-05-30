@@ -57,8 +57,11 @@ let commentAddedHandler (comment: CommentAddition) =
         { gift with Comments = comment :: gift.Comments } 
         |> putGift
 
+    printfn "Got comment added: %A" comment
     let gift = getGift comment.Gift
+    printfn "got gift: %A" gift
     let user = getUser comment.User
+    printfn "got user: %A" user
     match (gift, user) with
     | (Success gift, Success user) ->
         { Comment.Id = comment.Id; User = user.UserIdentity; 
@@ -144,6 +147,7 @@ let offerDeclinedHandler (offer: OfferDeclination) =
     | _ -> ()
 
 let domainEventHandler (event: Event) =
+    printfn "Got event: %A" event
     match event with
     | GiftAdded gift -> giftAddedHandler gift
     | TitleChanged title -> titleChangedHandler title

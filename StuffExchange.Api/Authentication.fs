@@ -20,7 +20,7 @@ let getUser username password =
     match username, password with
         | "troels", "1234" -> 
             UserIdentity(troels, ["User"]) |> Some
-        | "anne-marie", @"OqkB^K1aW42%n*1tEho427VH1txZaZ" -> 
+        | "anne-marie", "password" -> 
             UserIdentity(anne_marie, ["User"]) |> Some
         | _ -> None
 
