@@ -41,18 +41,24 @@ type GiftModule() as x =
 
         match commandName with
         | "AddGift" ->
-            {GiftAddition.Id = System.Guid.NewGuid(); User = userId; Title = request.Title; Description = request.Description}
+            {GiftAddition.Id = System.Guid.NewGuid(); User = userId; 
+            Title = request.Title; Description = request.Description}
             |> AddGiftDto
             |> route
             |> respond
         | _ -> box HttpStatusCode.UnsupportedMediaType
 
-
     do x.Post.["/{id:guid}"] <- fun parameters ->
         x.RequiresAuthentication()
         let userId = System.Guid(x.Context.CurrentUser.UserName)
         let giftId = System.Guid((parameters?id).ToString())
-        let commandName = getCommandName x.Request.Headers
+
+        let commandName = 
+            match x.Request.Headers.ContentType with
+            | "multipart/form-data;boundary=*****" -> 
+                printfn "AddImage"
+                "AddImage"
+            | _ -> getCommandName x.Request.Headers 
 
         match commandName with
         | "AddComment" ->
@@ -63,7 +69,6 @@ type GiftModule() as x =
             |> route
             |> respond
         | "AddImage" -> 
-            // TODO: check that it is a jpg
             let imageId = System.Guid.NewGuid()
             let image = Seq.head x.Request.Files
             let filename = sprintf @"images/%s.jpg" (imageId.ToString())
